@@ -47,6 +47,7 @@ export default class Game extends Phaser.Scene{
         this.player.body.checkCollision.right = false
 
         this.cameras.main.startFollow(this.player)
+        this.cameras.main.setDeadzone(this.scale.width * 1.5)
 
     }
     update(){
@@ -58,14 +59,18 @@ export default class Game extends Phaser.Scene{
             if(platform.y >= scrollY + 700){
                 platform.y = scrollY - Phaser.Math.Between(50, 100)
                 platform.body.updateFromGameObject()
+                console.log("altura plataforma: ",platform.y)
             }
 
         })
         const touchingDown = this.player.body.touching.down
 
         if(touchingDown){
-            this.player.setVelocityY(-300)
+            this.player.setVelocityY(-320)
         }
+        // if(this.cursors.up.isDown && touchingDown){
+        //     this.player.setVelocityY(-320)
+        // }
         if(this.cursors.left.isDown && !touchingDown){
             this.player.setVelocityX(-200)
         }
@@ -75,5 +80,23 @@ export default class Game extends Phaser.Scene{
         else{
             this.player.setVelocityX(0)
         }
+
+        this.horizontalWrap(this.player)
     }
+
+    /**@param {Phaser.GameObjects.Sprite} sprite */
+    horizontalWrap(sprite)
+    {
+        const halfWidth = sprite.displayWidth * 0.5
+        const gameWidth = this.scale.width
+        if (sprite.x < -halfWidth)
+        {
+            sprite.x = gameWidth + halfWidth
+        }
+        else if (sprite.x > gameWidth + halfWidth)
+        {
+            sprite.x = -halfWidth
+        }
+    }
+
 }
