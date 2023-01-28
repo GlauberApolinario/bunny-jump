@@ -4,6 +4,9 @@
   <h2 align="center">Bunny-Jump</h2>
 </p>
 
+## Sobre o Projeto
+Primeiro estudo com Phaser
+
 ## Deploy com Netlify
 <a href="https://bunny-jump-glauber.netlify.app" target="blank">Bunny-Jump</a>
 
