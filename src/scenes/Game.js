@@ -36,6 +36,9 @@ export default class Game extends Phaser.Scene{
     constructor(){
         super('game')
     }
+    init(){
+        this.carrotsCollected = 0
+    }
 
     /** @type {Phaser.Physics.Arcade.Group} */
     carrots
