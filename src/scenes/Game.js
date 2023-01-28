@@ -61,6 +61,10 @@ export default class Game extends Phaser.Scene{
         this.load.image('carrot', 'assets/carrot.png')
     }
     create(){
+        
+        
+
+
         this.add.image(240, 320, 'background').setScrollFactor(1,0)
         // this.add.image(240, 320, 'platform').setScale(0.5)
         // this.physics.add.image(240, 320, 'platform').setScale(0.5)
@@ -115,7 +119,7 @@ export default class Game extends Phaser.Scene{
         .setScrollFactor(0)
         .setOrigin(0.5, 0)
 
-        
+  
 
     }
 
@@ -166,6 +170,15 @@ export default class Game extends Phaser.Scene{
         }
 
         this.horizontalWrap(this.player)
+
+        const bottomPlatform = this.findBottomMostPlatform()
+        if (this.player.y > bottomPlatform.y + 200){
+            // console.log('game over')
+
+            this.scene.start('game-over')
+        }
+
+
     }
 
     /**@param {Phaser.GameObjects.Sprite} sprite */
@@ -183,4 +196,21 @@ export default class Game extends Phaser.Scene{
         }
     }
 
+    findBottomMostPlatform(){
+        const platforms = this.platforms.getChildren()
+        let bottomPlatform = platforms[0]
+
+        for(let i = 1; i < platforms.length; i++){
+            const platform = platforms[i]
+
+            if (platform.y < bottomPlatform.y){
+                continue
+            }
+            bottomPlatform = platform
+        }
+        return bottomPlatform
+    }
+
 }
+
+
